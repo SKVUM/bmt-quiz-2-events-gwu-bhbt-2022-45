@@ -6,15 +6,20 @@
     <title>TechCon 2025 Event Schedule</title>
     <!-- Load Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Set up Tailwind configuration for a custom font (Inter) and colors -->
+    <!-- Set up Tailwind configuration for dark mode, custom font (Inter) and colors -->
     <script>
         tailwind.config = {
+            darkMode: 'class', // Enable dark mode based on the 'dark' class on <body>
             theme: {
                 extend: {
                     colors: {
+                        // Light Mode Palette
                         'primary': '#047857', // Deep Teal/Green for titles and buttons
                         'secondary': '#F3F4F6',
                         'accent': '#EC4899', // Bright Magenta for highlights/time
+                        // Dark Mode Palette
+                        'dark-primary': '#10B981', // Emerald for contrast against dark background
+                        'dark-bg': '#0F172A', // Slate 900
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -30,11 +35,20 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s ease; /* Smooth background transition */
         }
         /* Ensure main content flexes to fill space */
         main {
             flex-grow: 1;
         }
+        
+        /* --- LIGHT MODE BACKGROUND (ANIME SKY) --- */
+        .anime-sky-bg {
+            background: linear-gradient(135deg, #fceabb 0%, #f8b5a0 100%);
+            background-attachment: fixed;
+        }
+        /* --- DARK MODE BACKGROUND CLASS IS HANDLED BY TAILWIND (bg-dark-bg) --- */
+
         /* Custom scrollbar for better aesthetics */
         ::-webkit-scrollbar {
             width: 8px;
@@ -46,33 +60,37 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #9CA3AF;
         }
-        
-        /* --- ANIME BACKGROUND STYLE ADDED HERE --- */
-        .anime-sky-bg {
-            /* A soft, vibrant gradient (light yellow to peach/pink) inspired by anime skies */
-            background: linear-gradient(135deg, #fceabb 0%, #f8b5a0 100%);
-            background-attachment: fixed; /* Fixes the gradient so it doesn't scroll with content */
+        /* Dark mode scrollbar style */
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569; /* Slate 600 */
         }
-        /* ----------------------------------------- */
-
     </style>
 </head>
 <body class="anime-sky-bg text-gray-800">
 
     <!-- A <header> with an <h1> for the conference title -->
-    <header class="bg-primary text-white shadow-xl py-6 md:py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">
-                TechCon 2025 Event Schedule
-            </h1>
-            <p class="mt-2 text-lg md:text-xl font-light opacity-90">Innovation. Connection. Future.</p>
+    <header class="bg-primary dark:bg-dark-bg text-white shadow-xl py-6 md:py-8 transition duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:flex md:justify-between md:items-center">
+            <!-- Title Group -->
+            <div class="flex-grow">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">
+                    TechCon 2025 Event Schedule
+                </h1>
+                <p class="mt-2 text-lg md:text-xl font-light opacity-90">Innovation. Connection. Future.</p>
+            </div>
+
+            <!-- Dark Mode Toggle Button -->
+            <button id="theme-toggle" class="mt-4 md:mt-0 px-4 py-2 bg-accent text-white font-semibold rounded-full 
+                                              hover:bg-pink-400 transition duration-300 shadow-lg md:ml-6">
+                <span id="toggle-icon">🌙</span> Dark Mode
+            </button>
         </div>
     </header>
 
     <!-- A <main> element to contain the core content -->
     <main class="py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-8 text-primary">Full Event Lineup</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-primary dark:text-dark-primary transition duration-300">Full Event Lineup</h2>
 
             <!-- A <section id="event-container" for dynamically generated event cards -->
             <section id="event-container" class="grid grid-cols-1 gap-6 md:gap-8 
@@ -84,7 +102,7 @@
     </main>
 
     <!-- A <footer> with copyright information -->
-    <footer class="bg-gray-800 text-white py-4 mt-auto">
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-4 mt-auto transition duration-300">
         <div class="max-w-7xl mx-auto px-4 text-center text-sm">
             <p>&copy; 2025 TechCon. All rights reserved. | Crafted with a focus on Responsive Design.</p>
         </div>
@@ -144,25 +162,25 @@
         ];
 
         /**
-         * Creates the HTML string for a single event card using Tailwind classes.
+         * Creates the HTML string for a single event card using Tailwind classes, including dark mode variants.
          * @param {object} event - The event data object.
          * @returns {string} The full HTML string for the card.
          */
         function createEventCard(event) {
             return `
-                <div class="event-card bg-white p-6 rounded-xl shadow-lg border border-gray-200 
+                <div class="event-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700
                             transition duration-300 ease-in-out 
-                            hover:shadow-2xl hover:scale-[1.02] hover:border-primary">
+                            hover:shadow-2xl hover:scale-[1.02] hover:border-primary dark:hover:border-dark-primary">
                     
-                    <h3 class="text-xl font-bold mb-3 text-primary border-b border-accent pb-2">
+                    <h3 class="text-xl font-bold mb-3 text-primary dark:text-dark-primary border-b border-accent pb-2">
                         ${event.title}
                     </h3>
 
                     <div class="space-y-2 text-sm">
-                        <p><strong class="font-semibold text-gray-600">Speaker:</strong> ${event.speaker}</p>
-                        <p><strong class="font-semibold text-gray-600">Time:</strong> <span class="text-accent font-medium">${event.time}</span></p>
-                        <p><strong class="font-semibold text-gray-600">Location:</strong> ${event.location}</p>
-                        <p class="mt-4 pt-3 border-t border-gray-100 text-gray-600 italic">
+                        <p><strong class="font-semibold text-gray-600 dark:text-gray-300">Speaker:</strong> <span class="dark:text-white">${event.speaker}</span></p>
+                        <p><strong class="font-semibold text-gray-600 dark:text-gray-300">Time:</strong> <span class="text-accent font-medium">${event.time}</span></p>
+                        <p><strong class="font-semibold text-gray-600 dark:text-gray-300">Location:</strong> <span class="dark:text-white">${event.location}</span></p>
+                        <p class="mt-4 pt-3 border-t border-gray-100 dark:border-slate-700 text-gray-600 dark:text-gray-400 italic">
                             ${event.description}
                         </p>
                     </div>
@@ -170,17 +188,73 @@
                     <button onclick="alert('Viewing details for: ${event.title}')"
                         class="mt-6 w-full py-2.5 rounded-lg text-white font-semibold 
                                 bg-primary hover:bg-green-700 focus:outline-none focus:ring-4 
-                                focus:ring-green-300 transition duration-150 shadow-md">
+                                focus:ring-green-300 dark:bg-dark-primary dark:hover:bg-emerald-600 
+                                dark:focus:ring-emerald-500 transition duration-150 shadow-md">
                         View Details
                     </button>
                 </div>
             `;
         }
 
+        /* --- Dark Mode Toggle Logic --- */
+        function enableDarkMode(isInitial = false) {
+            const body = document.body;
+            const toggleButton = document.getElementById('theme-toggle');
+            const toggleIcon = document.getElementById('toggle-icon');
+
+            body.classList.add('dark', 'bg-dark-bg');
+            body.classList.remove('anime-sky-bg', 'text-gray-800');
+            body.classList.add('text-gray-100');
+
+            if (!isInitial) {
+                localStorage.setItem('theme', 'dark');
+            }
+            if (toggleIcon) toggleIcon.textContent = '☀️';
+            if (toggleButton) toggleButton.lastChild.textContent = ' Light Mode';
+        }
+
+        function enableLightMode(isInitial = false) {
+            const body = document.body;
+            const toggleButton = document.getElementById('theme-toggle');
+            const toggleIcon = document.getElementById('toggle-icon');
+
+            body.classList.remove('dark', 'bg-dark-bg', 'text-gray-100');
+            body.classList.add('anime-sky-bg', 'text-gray-800');
+
+            if (!isInitial) {
+                localStorage.setItem('theme', 'light');
+            }
+            if (toggleIcon) toggleIcon.textContent = '🌙';
+            if (toggleButton) toggleButton.lastChild.textContent = ' Dark Mode';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const eventContainer = document.getElementById('event-container');
+            const toggleButton = document.getElementById('theme-toggle');
+
+            // 1. Load preference
+            const storedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+                enableDarkMode(true);
+            } else {
+                enableLightMode(true);
+            }
+
+            // 2. Attach toggle handler
+            if (toggleButton) {
+                toggleButton.addEventListener('click', () => {
+                    if (document.body.classList.contains('dark')) {
+                        enableLightMode();
+                    } else {
+                        enableDarkMode();
+                    }
+                });
+            }
+
+            // 3. Generate cards
             if (eventContainer) {
-                // Dynamically generate event cards
                 events.forEach(event => {
                     const cardHTML = createEventCard(event);
                     eventContainer.insertAdjacentHTML('beforeend', cardHTML);

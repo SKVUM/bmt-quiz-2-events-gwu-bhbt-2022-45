@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCon 2025 Event Schedule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>TechCon 2025 Event Schedule</h1>
+            <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                <span class="icon" aria-hidden="true">☀️</span>
+                <span class="icon active" aria-hidden="true">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="controls" aria-label="Event Controls and Filters">
+            <input type="text" id="event-search" placeholder="Search events by title or description..." aria-label="Search events">
+            
+            <div id="filter-buttons" role="group" aria-label="Filter events by type">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+                <button class="filter-btn" data-filter="Keynote" aria-pressed="false">Keynotes</button>
+                <button class="filter-btn" data-filter="Talk" aria-pressed="false">Talks</button>
+                <button class="filter-btn" data-filter="Workshop" aria-pressed="false">Workshops</button>
+                <button class="filter-btn" data-filter="Panel" aria-pressed="false">Panels</button>
+                <button class="filter-btn" data-filter="Social" aria-pressed="false">Social</button>
+            </div>
+            
+            <p id="a11y-live-region" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+        </section>
+
+        <section id="event-container" aria-live="polite" aria-busy="false">
+            </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TechCon. All Rights Reserved. Built by an aspiring developer.</p>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

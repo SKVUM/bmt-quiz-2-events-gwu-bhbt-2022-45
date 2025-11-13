@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechCon 2025 Event Schedule</title>
     <!-- Load Tailwind CSS CDN -->
-    <script src="scripts.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Set up Tailwind configuration for dark mode, custom font (Inter) and colors -->
     <script>
         tailwind.config = {
@@ -28,7 +28,43 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css"
+    <style>
+        /* Apply Inter font globally */
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease; /* Smooth background transition */
+        }
+        /* Ensure main content flexes to fill space */
+        main {
+            flex-grow: 1;
+        }
+        
+        /* --- LIGHT MODE BACKGROUND (ANIME SKY) --- */
+        .anime-sky-bg {
+            background: linear-gradient(135deg, #fceabb 0%, #f8b5a0 100%);
+            background-attachment: fixed;
+        }
+        /* --- DARK MODE BACKGROUND CLASS IS HANDLED BY TAILWIND (bg-dark-bg) --- */
+
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF;
+        }
+        /* Dark mode scrollbar style */
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569; /* Slate 600 */
+        }
+    </style>
 </head>
 <body class="anime-sky-bg text-gray-800">
 

@@ -12,7 +12,7 @@
             flex-grow: 1;
         }
         
-        /* --- LIGHT MODE BACKGROUND (ANIME SKY) --- */
+        
         .anime-sky-bg {
             background: linear-gradient(135deg, #fceabb 0%, #f8b5a0 100%);
             background-attachment: fixed;

@@ -1,0 +1,28 @@
+/* Base styles to ensure full height and smooth transitions */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Custom scrollbar for better aesthetics */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: #D1D5DB; /* Light gray in light mode */
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF;
+}
+
+/* Dark mode scrollbar style */
+.dark ::-webkit-scrollbar-thumb {
+    background: #475569; /* Slate 600 in dark mode */
+}

@@ -1,10 +1,22 @@
-/* --- Global & Typography --- */
+/* --- Base Reset & Typography --- */
 :root {
-    --primary-color: #007bff; /* A vibrant blue */
-    --secondary-color: #f8f9fa; /* Light background */
-    --text-color: #343a40; /* Dark text */
-    --card-bg: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    /* Level 1: Consistent Color Scheme (Light) */
+    --color-primary: #007bff;
+    --color-secondary: #6c757d;
+    --color-text: #212529;
+    --color-background: #f8f9fa;
+    --color-card-bg: #ffffff;
+    --color-border: #dee2e6;
+    --color-accent-shadow: rgba(0, 123, 255, 0.1);
+}
+
+/* Levels 3 & 4: Dark Mode Variables */
+.dark-mode {
+    --color-text: #e9ecef;
+    --color-background: #121212;
+    --color-card-bg: #1e1e1e;
+    --color-border: #343a40;
+    --color-accent-shadow: rgba(0, 123, 255, 0.3);
 }
 
 * {
@@ -14,129 +26,316 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif; /* Level 1: Custom Font */
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--secondary-color);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    transition: background-color 0.3s, color 0.3s; /* Smooth Dark Mode Transition */
 }
 
+/* --- Header & Footer --- */
 
-.site-header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 2rem 1rem;
-    text-align: center;
-    box-shadow: 0 4px 6px var(--shadow-color);
-}
-
-.site-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.site-header p {
-    font-weight: 300;
-}
-
-.site-footer {
-    text-align: center;
+header {
+    background-color: var(--color-primary);
+    color: #ffffff;
     padding: 1.5rem 1rem;
-    background-color: #343a40; /* Dark footer */
-    color: white;
+    box-shadow: 0 2px 4px var(--color-accent-shadow);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-card-bg);
+    color: var(--color-secondary);
     font-size: 0.9rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 /* --- Main Content Layout --- */
+
 main {
     max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
-#event-container h2 {
-    text-align: center;
+/* --- Controls Section (Filters & Search) --- */
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     margin-bottom: 2rem;
-    color: var(--primary-color);
-    font-weight: 600;
 }
 
-/* --- Responsive Card Layout (CSS Grid) --- */
+/* Level 7: Search Input */
+#event-search {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    color: var(--color-text);
+    background-color: var(--color-card-bg);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
 
-.event-grid {
-    /* Mobile First: Single Column */
+#event-search:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-accent-shadow);
+    outline: none;
+}
+
+/* Level 2: Filter Buttons */
+#filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--color-primary);
+    border-radius: 20px;
+    background-color: transparent;
+    color: var(--color-primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.1s, box-shadow 0.3s;
+    /* Level 9: Accessibility */
+    outline-offset: 2px; 
+}
+
+.filter-btn:hover,
+.filter-btn:focus {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 6px var(--color-accent-shadow);
+}
+
+
+/* --- Event Grid Layout (Responsive) --- */
+
+#event-container {
+    /* Core Requirement: Responsive Grid */
     display: grid;
-    gap: 1.5rem; /* Good use of whitespace */
-    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    grid-template-columns: 1fr; /* Mobile: Single column */
 }
 
+/* Desktop/Tablet Layout: Multi-column grid */
 @media (min-width: 768px) {
-    /* Tablet/Desktop: 2 Columns */
-    .event-grid {
-        grid-template-columns: repeat(2, 1fr);
+    #event-container {
+        grid-template-columns: repeat(2, 1fr); /* Tablet: Two columns */
     }
 }
 
 @media (min-width: 1024px) {
-    /* Larger Desktop: 3 Columns */
-    .event-grid {
-        grid-template-columns: repeat(3, 1fr);
+    #event-container {
+        grid-template-columns: repeat(3, 1fr); /* Desktop: Three columns */
     }
 }
 
-/* --- Card Styling (.event-card) --- */
+.no-results {
+    grid-column: 1 / -1; /* Center message across all columns */
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--color-secondary);
+    padding: 3rem 0;
+}
+
+/* --- Event Card Styling (Level 1: Polished UI) --- */
+
 .event-card {
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Subtle animation/transition */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    /* Level 1: Subtle box-shadow and transition effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover and Focus States for Visual Feedback */
 .event-card:hover {
-    transform: translateY(-5px); /* Lift effect */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    /* Level 1: "Lift off the page" effect */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--color-accent-shadow);
 }
 
-.event-card h3 {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 0.5rem;
+.card-image-wrapper {
+    position: relative;
+    height: 150px;
 }
 
-.event-card p {
+.event-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.event-type-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: var(--color-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.event-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.event-datetime {
+    font-size: 0.95rem;
+    color: var(--color-primary);
+    font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
-.event-card strong {
-    font-weight: 600;
+.event-description {
+    font-size: 0.9rem;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
 }
 
-/* Button Styling */
-.register-button {
+/* Level 7: Search Highlight Styling */
+mark {
+    background-color: #ffc107; /* Yellow highlight */
+    padding: 0 2px;
+    border-radius: 2px;
+    color: var(--color-text); /* Ensure readable text over highlight */
+}
+
+/* Level 6: Countdown Styling */
+.countdown {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #28a745; /* Green for active countdown */
+    margin-bottom: 1rem;
+    transition: color 0.3s;
+}
+
+.countdown.ended {
+    color: #dc3545; /* Red for ended events */
+}
+
+/* --- Action Button (Level 5) --- */
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
     display: inline-block;
-    padding: 0.75rem 1.5rem;
-    margin-top: 1rem;
-    background-color: var(--primary-color);
-    color: white;
-    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
     text-decoration: none;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s ease, transform 0.1s ease; /* Transition for smoothness */
+    font-weight: 500;
+    transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+    font-size: 0.9rem;
 }
 
-/* Button Hover/Focus Feedback */
-.register-button:hover, .register-button:focus {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: translateY(-1px);
-    outline: none; /* Remove default focus outline */
+.calendar-btn {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.calendar-btn:hover,
+.calendar-btn:focus {
+    background-color: #0056b3;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* --- Dark Mode Toggle (Levels 3 & 4) --- */
+
+#theme-toggle {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.dark-mode #theme-toggle {
+    background: #495057;
+    border-color: #6c757d;
+}
+
+.icon {
+    position: absolute;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Initial state for light mode icons */
+.dark-mode .icon:first-child { /* Sun icon */
+    transform: translateY(20px);
+}
+.dark-mode .icon:last-child { /* Moon icon */
+    transform: translateY(0);
+}
+
+/* Initial state for light mode icons */
+.icon:first-child { /* Sun icon */
+    transform: translateY(0);
+}
+.icon:last-child { /* Moon icon */
+    transform: translateY(-20px);
+}
+
+/* --- Accessibility (Level 9) --- */
+
+/* Screen reader only class (sr-only) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }

@@ -1,4 +1,4 @@
-<style>
+
         /* Apply Inter font globally */
         body {
             font-family: 'Inter', sans-serif;
@@ -33,5 +33,4 @@
         /* Dark mode scrollbar style */
         .dark ::-webkit-scrollbar-thumb {
             background: #475569; /* Slate 600 */
-        }
-    </style>
+6
